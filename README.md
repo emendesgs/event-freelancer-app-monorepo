@@ -58,7 +58,7 @@ Uma plataforma completa para freelancers de eventos, conectando organizadores co
 ### 1. Clone o repositório
 ```bash
 git clone <repository-url>
-cd event-freelancer-app
+cd event-freelancer-app-monorepo
 ```
 
 ### 2. Instale as dependências
@@ -114,7 +114,7 @@ npm run client:dev    # Frontend na porta 3000
 ## 📁 Estrutura do Projeto
 
 ```
-event-freelancer-app/
+event-freelancer-app-monorepo/
 ├── backend/                 # API Backend
 │   ├── src/
 │   │   ├── controllers/    # Controladores da API
@@ -334,4 +334,4 @@ Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalh
 ---
 
 **Desenvolvido com ❤️ pela equipe Event Freelancer**
-# event-freelancer-app-monorepo
+# event-freelancer-app-monorepo-monorepo
