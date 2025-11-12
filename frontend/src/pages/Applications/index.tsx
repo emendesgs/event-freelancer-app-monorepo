@@ -23,38 +23,8 @@ const Applications: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  // Fetch applications from API
   useEffect(() => {
-    const fetchApplications = async () => {
-      try {
-        setLoading(true);
-        const response = await apiService.getMyApplications();
-        if (response.success && Array.isArray(response.data)) {
-          const transformedApplications = response.data.map((app: any) => ({
-            id: app.id,
-            jobId: app.job_id,
-            jobTitle: app.job_title || 'Vaga não encontrada',
-            company: app.company_name || 'Empresa não especificada',
-            appliedDate: new Date(app.created_at).toISOString().split('T')[0],
-            status: app.status,
-            message: app.proposal,
-            salary: app.proposed_price ? `R$ ${app.proposed_price}` : 'Não especificado',
-            location: app.location || 'Localização não especificada',
-            category: app.category_name || 'Categoria não especificada'
-          }));
-          setApplications(transformedApplications);
-        } else {
-          setApplications([]);
-        }
-      } catch (err) {
-        setError('Erro ao carregar candidaturas');
-        console.error('Error fetching applications:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchApplications();
+    setLoading(false);
   }, []);
 
   // Dados mockados para demonstração (fallback)

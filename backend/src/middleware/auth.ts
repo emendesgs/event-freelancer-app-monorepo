@@ -7,7 +7,7 @@ export interface JwtPayload {
   email: string;
 }
 
-export const authenticateToken = async (
+export const protect = async (
   req: Request,
   res: Response,
   next: NextFunction

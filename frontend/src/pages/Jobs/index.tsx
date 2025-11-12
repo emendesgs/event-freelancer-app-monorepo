@@ -46,53 +46,10 @@ const Jobs: React.FC = () => {
     fetchJobs();
   }, []);
 
-  // Dados mockados para demonstração (fallback)
-  const mockJobs: Job[] = [
-    {
-      id: '1',
-      title: 'Fotógrafo de Eventos',
-      company: 'Eventos Plus',
-      location: 'São Paulo, SP',
-      salary: 'R$ 800 - R$ 1.200 por evento',
-      type: 'Freelance',
-      category: 'Fotografia',
-      description: 'Buscamos fotógrafo experiente para capturar momentos especiais em eventos corporativos e sociais.',
-      requirements: ['Experiência mínima de 2 anos', 'Equipamento próprio', 'Portfolio diversificado'],
-      postedDate: '2024-01-15',
-      deadline: '2024-01-30'
-    },
-    {
-      id: '2',
-      title: 'Designer Gráfico',
-      company: 'Marketing Digital',
-      location: 'Remoto',
-      salary: 'R$ 60 - R$ 80 por hora',
-      type: 'Freelance',
-      category: 'Design',
-      description: 'Designer criativo para criação de materiais promocionais e identidade visual.',
-      requirements: ['Domínio de Adobe Creative Suite', 'Experiência em branding', 'Portfolio criativo'],
-      postedDate: '2024-01-14',
-      deadline: '2024-01-25'
-    },
-    {
-      id: '3',
-      title: 'Videomaker',
-      company: 'Produções ABC',
-      location: 'Rio de Janeiro, RJ',
-      salary: 'R$ 1.500 - R$ 2.500 por projeto',
-      type: 'Freelance',
-      category: 'Vídeo',
-      description: 'Videomaker para produção de vídeos corporativos e institucionais.',
-      requirements: ['Experiência em edição', 'Equipamento próprio', 'Conhecimento em After Effects'],
-      postedDate: '2024-01-13',
-      deadline: '2024-01-28'
-    }
-  ];
-
   const categories = ['Todas', 'Fotografia', 'Design', 'Vídeo', 'Música', 'Decoração', 'Organização'];
   const types = ['Todos', 'Freelance', 'Tempo Integral', 'Parcial'];
 
-  const filteredJobs = (jobs.length > 0 ? jobs : mockJobs).filter(job => {
+  const filteredJobs = jobs.filter(job => {
     const matchesSearch = job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          job.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          job.description.toLowerCase().includes(searchTerm.toLowerCase());

@@ -100,9 +100,9 @@ const Login: React.FC = () => {
             </div>
 
             <div className="text-sm">
-              <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+              <button type="button" className="font-medium text-indigo-600 hover:text-indigo-500">
                 Esqueceu sua senha?
-              </a>
+              </button>
             </div>
           </div>
 

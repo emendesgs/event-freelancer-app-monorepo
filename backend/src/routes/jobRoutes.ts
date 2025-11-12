@@ -7,7 +7,7 @@ import {
   deleteJob, 
   getMyJobs 
 } from '../controllers/jobController';
-import { authenticateToken, optionalAuth } from '../middleware/auth';
+import { protect, optionalAuth } from '../middleware/auth';
 
 const router = Router();
 
@@ -16,9 +16,9 @@ router.get('/', optionalAuth, getJobs);
 router.get('/:id', optionalAuth, getJobById);
 
 // Protected routes
-router.post('/', authenticateToken, createJob);
-router.get('/user/me', authenticateToken, getMyJobs);
-router.put('/:id', authenticateToken, updateJob);
-router.delete('/:id', authenticateToken, deleteJob);
+router.post('/', protect, createJob);
+router.get('/user/me', protect, getMyJobs);
+router.put('/:id', protect, updateJob);
+router.delete('/:id', protect, deleteJob);
 
 export default router;

@@ -315,21 +315,21 @@ Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalh
 
 ### Versão 1.1
 - [ ] Sistema de pagamentos
-- [ ] Chat em tempo real
-- [ ] Notificações push
+- [x] Chat em tempo real
+- [x] Notificações push
 - [ ] App mobile
 
 ### Versão 1.2
-- [ ] Sistema de contratos
-- [ ] Relatórios e analytics
-- [ ] Integração com calendários
+- [x] Sistema de contratos
+- [x] Relatórios e analytics
+- [x] Integração com calendários
 - [ ] API pública
 
 ### Versão 2.0
-- [ ] IA para matching
-- [ ] Sistema de certificações
+- [x] IA para matching
+- [x] Sistema de certificações
 - [ ] Marketplace de serviços
-- [ ] Integração com redes sociais
+- [x] Integração com redes sociais
 
 ---
 

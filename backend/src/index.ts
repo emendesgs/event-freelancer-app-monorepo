@@ -6,10 +6,22 @@ import compression from 'compression';
 import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 import routes from './routes';
+import { createServer } from 'http';
+import { Server } from 'socket.io';
+import { handleChat } from './chat';
 
 dotenv.config();
 
 const app = express();
+const httpServer = createServer(app);
+const io = new Server(httpServer, {
+  cors: {
+    origin: process.env['NODE_ENV'] === 'production' 
+      ? ['https://yourdomain.com'] 
+      : ['http://localhost:3000', 'http://localhost:3001'],
+    credentials: true
+  }
+});
 const PORT = process.env['PORT'] || 5000;
 
 // Rate limiting
@@ -39,6 +51,9 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 // Routes
 app.use('/api', routes);
 
+// Initialize chat
+handleChat(io);
+
 // 404 handler
 app.use('*', (_req, res) => {
   res.status(404).json({
@@ -60,10 +75,11 @@ app.use((err: any, _req: express.Request, res: express.Response, _next: express.
 });
 
 // Start server
-app.listen(PORT, () => {
+httpServer.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
   console.log(`📊 Environment: ${process.env['NODE_ENV'] || 'development'}`);
   console.log(`🔗 Health check: http://localhost:${PORT}/api/health`);
+  console.log(`📱 Mobile app ready: ${process.env.NODE_ENV === 'production' ? 'Yes' : 'No'}`);
 });
 
 export default app;

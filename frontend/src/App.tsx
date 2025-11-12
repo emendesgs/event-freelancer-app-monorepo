@@ -14,6 +14,8 @@ import Applications from './pages/Applications';
 import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
 import ProtectedRoute from './components/Auth/ProtectedRoute';
+import ProductsPage from './pages/Products';
+import ProductDetails from './pages/Products/ProductDetails';
 
 // Create a client
 const queryClient = new QueryClient({
@@ -39,6 +41,8 @@ function App() {
                 <Route path="/register" element={<Register />} />
                 <Route path="/jobs" element={<Jobs />} />
                 <Route path="/jobs/:id" element={<JobDetails />} />
+                <Route path="/products" element={<ProductsPage />} />
+                <Route path="/products/:id" element={<ProductDetails />} />
                 
                 {/* Protected Routes */}
                 <Route path="/dashboard" element={

@@ -189,6 +189,60 @@ const createTables = async () => {
       );
     `);
 
+    // Contracts table
+    await db.exec(`
+      CREATE TABLE IF NOT EXISTS contracts (
+        id TEXT PRIMARY KEY,
+        job_id TEXT NOT NULL,
+        freelancer_id TEXT NOT NULL,
+        terms TEXT NOT NULL,
+        status TEXT NOT NULL DEFAULT 'pending', -- pending, active, completed, terminated
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (job_id) REFERENCES jobs (id) ON DELETE CASCADE,
+        FOREIGN KEY (freelancer_id) REFERENCES users (id) ON DELETE CASCADE
+      );
+    `);
+
+    // Certifications table
+    await db.exec(`
+      CREATE TABLE IF NOT EXISTS certifications (
+        id TEXT PRIMARY KEY,
+        freelancer_id TEXT NOT NULL,
+        name TEXT NOT NULL,
+        issuer TEXT NOT NULL,
+        date_issued TEXT NOT NULL,
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (freelancer_id) REFERENCES users (id) ON DELETE CASCADE
+      );
+    `);
+
+    // Services table
+    await db.exec(`
+      CREATE TABLE IF NOT EXISTS services (
+        id TEXT PRIMARY KEY,
+        freelancer_id TEXT NOT NULL,
+        title TEXT NOT NULL,
+        description TEXT NOT NULL,
+        price REAL NOT NULL,
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (freelancer_id) REFERENCES users (id) ON DELETE CASCADE
+      );
+    `);
+
+    // Social Links table
+    await db.exec(`
+      CREATE TABLE IF NOT EXISTS social_links (
+        id TEXT PRIMARY KEY,
+        user_id TEXT NOT NULL,
+        platform TEXT NOT NULL,
+        url TEXT NOT NULL,
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+      );
+    `);
+
     console.log('Database tables created successfully!');
   } catch (error) {
     console.error('Error creating tables:', error);

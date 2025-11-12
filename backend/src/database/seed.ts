@@ -220,11 +220,97 @@ const seedApplications = async () => {
   }
 };
 
+const seedProducts = async () => {
+  try {
+    console.log('Seeding products...');
+    const db = await getDatabase();
+
+    // Get category IDs
+    const categoriesResult = await db.all('SELECT id, name FROM categories');
+    const categories = categoriesResult;
+
+    // Get user IDs
+    const usersResult = await db.all('SELECT id FROM users LIMIT 3');
+    const users = usersResult;
+
+    if (categories.length === 0 || users.length === 0) {
+      console.log('No categories or users found. Skipping product seeding.');
+      return;
+    }
+
+    const products = [
+      {
+        name: 'Cadeira de Evento',
+        description: 'Cadeira confortável para eventos.',
+        price: 15.00,
+        price_type: 'rental',
+        condition: 'like_new',
+        category_id: categories.find((c: any) => c.name === 'Equipamentos')?.id || categories[0].id,
+        user_id: users[0].id,
+      },
+      {
+        name: 'Mesa de Buffet',
+        description: 'Mesa grande para buffet.',
+        price: 50.00,
+        price_type: 'rental',
+        condition: 'good',
+        category_id: categories.find((c: any) => c.name === 'Equipamentos')?.id || categories[0].id,
+        user_id: users[1].id,
+      },
+      {
+        name: 'Sistema de Som Completo',
+        description: 'Sistema de som com dois alto-falantes e microfone.',
+        price: 350.00,
+        price_type: 'sale',
+        condition: 'new',
+        category_id: categories.find((c: any) => c.name === 'Som e Iluminação')?.id || categories[1].id,
+        user_id: users[0].id,
+      },
+      {
+        name: 'Projetor HD',
+        description: 'Projetor de alta definição para apresentações.',
+        price: 120.00,
+        price_type: 'rental',
+        condition: 'like_new',
+        category_id: categories.find((c: any) => c.name === 'Som e Iluminação')?.id || categories[1].id,
+        user_id: users[2].id,
+      },
+    ];
+
+    for (const product of products) {
+      const productId = uuidv4();
+
+      await db.run(
+        `INSERT OR IGNORE INTO products (id, user_id, category_id, name, description, price, price_type, condition, is_available, views_count, created_at, updated_at)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'), datetime('now'))`,
+        [
+          productId,
+          product.user_id,
+          product.category_id,
+          product.name,
+          product.description,
+          product.price,
+          product.price_type,
+          product.condition,
+          1, // is_available
+          Math.floor(Math.random() * 200), // Random views
+        ]
+      );
+    }
+
+    console.log('Products seeded successfully!');
+  } catch (error) {
+    console.error('Error seeding products:', error);
+    throw error;
+  }
+};
+
 const seedDatabase = async () => {
   try {
     await seedUsers();
     await seedJobs();
     await seedApplications();
+    await seedProducts();
     console.log('Database seeding completed successfully!');
     process.exit(0);
   } catch (error) {

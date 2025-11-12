@@ -1,12 +1,12 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
-import { ApiResponse } from '../types';
+import { ApiResponse, Product, Category } from '../types';
 
 class ApiService {
   private api: AxiosInstance;
 
   constructor() {
     this.api = axios.create({
-      baseURL: '/api',
+      baseURL: 'http://localhost:5000/api',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -107,7 +107,7 @@ class ApiService {
   }
 
   // Products endpoints
-  async getProducts(params?: any) {
+  async getProducts(params?: any): Promise<ApiResponse<Product[]>> {
     return this.get('/products', params);
   }
 
@@ -196,7 +196,7 @@ class ApiService {
   }
 
   // Categories endpoints
-  async getCategories() {
+  async getCategories(): Promise<ApiResponse<Category[]>> {
     return this.get('/categories');
   }
 

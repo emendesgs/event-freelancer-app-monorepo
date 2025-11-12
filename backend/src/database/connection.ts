@@ -9,7 +9,7 @@ const getDatabase = async (): Promise<Database> => {
     return db;
   }
 
-  const dbPath = path.join(__dirname, '../../..', 'event_freelancer.db');
+  const dbPath = path.resolve(__dirname, '..', '..', 'prisma', 'dev.db');
   
   db = await open({
     filename: dbPath,
@@ -21,3 +21,8 @@ const getDatabase = async (): Promise<Database> => {
 };
 
 export default getDatabase;
+
+export const query = async (sql: string, params: any[] = []) => {
+  const db = await getDatabase();
+  return db.all(sql, params);
+};

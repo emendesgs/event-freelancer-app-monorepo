@@ -15,7 +15,7 @@ const Hero: React.FC = () => {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
         <div className="text-center">
           {/* Main Heading */}
-          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
             Conectando{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-secondary-600">
               Talentos
@@ -27,7 +27,7 @@ const Hero: React.FC = () => {
           </h1>
           
           {/* Subtitle */}
-          <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg sm:text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
             A plataforma completa para freelancers de eventos. Publique vagas, 
             encontre profissionais qualificados, alugue equipamentos e muito mais.
           </p>
@@ -55,32 +55,32 @@ const Hero: React.FC = () => {
               <div className="flex items-center justify-center w-16 h-16 bg-primary-100 rounded-full mx-auto mb-4">
                 <Calendar className="w-8 h-8 text-primary-600" />
               </div>
-              <div className="text-3xl font-bold text-gray-900 mb-2">500+</div>
-              <div className="text-gray-600">Eventos Ativos</div>
+              <div className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">500+</div>
+              <div className="text-sm sm:text-base text-gray-600">Eventos Ativos</div>
             </div>
             
             <div className="text-center">
               <div className="flex items-center justify-center w-16 h-16 bg-secondary-100 rounded-full mx-auto mb-4">
                 <Users className="w-8 h-8 text-secondary-600" />
               </div>
-              <div className="text-3xl font-bold text-gray-900 mb-2">2.5k+</div>
-              <div className="text-gray-600">Profissionais</div>
+              <div className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">2.5k+</div>
+              <div className="text-sm sm:text-base text-gray-600">Profissionais</div>
             </div>
             
             <div className="text-center">
               <div className="flex items-center justify-center w-16 h-16 bg-warning-100 rounded-full mx-auto mb-4">
                 <Star className="w-8 h-8 text-warning-600" />
               </div>
-              <div className="text-3xl font-bold text-gray-900 mb-2">4.8</div>
-              <div className="text-gray-600">Avaliação Média</div>
+              <div className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">4.8</div>
+              <div className="text-sm sm:text-base text-gray-600">Avaliação Média</div>
             </div>
             
             <div className="text-center">
               <div className="flex items-center justify-center w-16 h-16 bg-success-100 rounded-full mx-auto mb-4">
                 <TrendingUp className="w-8 h-8 text-success-600" />
               </div>
-              <div className="text-3xl font-bold text-gray-900 mb-2">98%</div>
-              <div className="text-gray-600">Taxa de Sucesso</div>
+              <div className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">98%</div>
+              <div className="text-sm sm:text-base text-gray-600">Taxa de Sucesso</div>
             </div>
           </div>
         </div>

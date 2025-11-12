@@ -49,7 +49,16 @@ export const createJob = async (req: Request, res: Response): Promise<void> => {
     );
 
     // Get the created job
-    const job = await db.get('SELECT * FROM jobs WHERE id = ?', [jobId]);
+    const job = await db.get(
+      `SELECT j.*, 
+              u.full_name as user_name, u.profile_image_url as user_image, u.rating as user_rating,
+              c.name as category_name, c.icon as category_icon, c.color as category_color
+       FROM jobs j
+       JOIN users u ON j.user_id = u.id
+       JOIN categories c ON j.category_id = c.id
+       WHERE j.id = ?`,
+      [jobId]
+    );
 
     const response: ApiResponse<Job> = {
       success: true,

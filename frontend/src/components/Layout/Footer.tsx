@@ -20,18 +20,18 @@ const Footer: React.FC = () => {
               freelancers de eventos, organizadores e profissionais qualificados.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              <button className="text-gray-400 hover:text-white transition-colors">
                 <Facebook className="w-5 h-5" />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              </button>
+              <button className="text-gray-400 hover:text-white transition-colors">
                 <Twitter className="w-5 h-5" />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              </button>
+              <button className="text-gray-400 hover:text-white transition-colors">
                 <Instagram className="w-5 h-5" />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              </button>
+              <button className="text-gray-400 hover:text-white transition-colors">
                 <Linkedin className="w-5 h-5" />
-              </a>
+              </button>
             </div>
           </div>
 
