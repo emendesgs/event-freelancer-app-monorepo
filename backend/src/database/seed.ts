@@ -87,6 +87,7 @@ const seedJobs = async () => {
 
     const jobs = [
       {
+        id: '1',
         title: 'Fotógrafo para Casamento',
         description: 'Precisamos de um fotógrafo profissional para capturar os momentos especiais do nosso casamento. Evento será realizado em São Paulo com aproximadamente 200 convidados.',
         category_id: categories.find((c: any) => c.name === 'Fotografia')?.id || categories[0].id,
@@ -126,13 +127,12 @@ const seedJobs = async () => {
 
     for (const job of jobs) {
       const userId = users[Math.floor(Math.random() * users.length)].id;
-      const jobId = uuidv4();
 
       await db.run(
         `INSERT OR IGNORE INTO jobs (id, user_id, category_id, title, description, event_date, event_time, location, budget_min, budget_max, budget_type, requirements, status, is_featured, views_count, applications_count, created_at, updated_at)
          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'), datetime('now'))`,
         [
-          jobId,
+          job.id,  // Use the static ID from the jobs array
           userId,
           job.category_id,
           job.title,

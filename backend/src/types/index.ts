@@ -250,6 +250,7 @@ export interface PaginationParams {
 }
 
 export interface SearchFilters {
+  q?: string;
   category_id?: string;
   location?: string;
   budget_min?: number | undefined;

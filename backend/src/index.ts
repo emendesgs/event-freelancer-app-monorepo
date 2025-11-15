@@ -1,6 +1,5 @@
 import express from 'express';
 import cors from 'cors';
-import helmet from 'helmet';
 import morgan from 'morgan';
 import compression from 'compression';
 import rateLimit from 'express-rate-limit';
@@ -22,7 +21,7 @@ const io = new Server(httpServer, {
     credentials: true
   }
 });
-const PORT = process.env['PORT'] || 5000;
+const PORT = process.env.PORT || 3001;
 
 // Rate limiting
 const limiter = rateLimit({
@@ -35,11 +34,10 @@ const limiter = rateLimit({
 });
 
 // Middleware
-app.use(helmet());
 app.use(cors({
   origin: process.env['NODE_ENV'] === 'production' 
     ? ['https://yourdomain.com'] 
-    : ['http://localhost:3000', 'http://localhost:3001'],
+    : ['http://localhost:4201', 'http://localhost:4200', 'http://localhost:3000'],
   credentials: true
 }));
 app.use(compression());

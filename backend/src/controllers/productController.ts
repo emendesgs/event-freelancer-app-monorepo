@@ -1,20 +1,41 @@
 import { Request, Response } from 'express';
-import getDatabase from '../database/connection';
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
 
 export const getProducts = async (_req: Request, res: Response) => {
     try {
-        const db = await getDatabase();
-        const products = await db.all(`
-            SELECT 
-                p.*,
-                u.full_name as userName,
-                c.name as categoryName
-            FROM products p
-            JOIN users u ON p.user_id = u.id
-            JOIN categories c ON p.category_id = c.id
-        `);
+        const products = await prisma.product.findMany({
+            include: {
+                category: true,
+            },
+        });
         res.status(200).json(products);
     } catch (error) {
         res.status(500).json({ message: 'Error fetching products', error });
+    }
+};
+
+export const getProductById = async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    if (!id) {
+        return res.status(400).json({ message: 'Product ID is required' });
+    }
+
+    try {
+        const product = await prisma.product.findUnique({
+            where: { id },
+            include: {
+                category: true,
+            },
+        });
+        if (product) {
+            return res.status(200).json(product);
+        } else {
+            return res.status(404).json({ message: 'Product not found' });
+        }
+    } catch (error) {
+        return res.status(500).json({ message: 'Error fetching product', error });
     }
 };

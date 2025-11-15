@@ -76,6 +76,54 @@ export const createJob = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+const buildWhereClause = (filters: SearchFilters) => {
+  const whereParts: string[] = [];
+  const queryParams: any[] = [];
+
+  whereParts.push("j.status = 'open'");
+
+  if (filters.q) {
+    const qLower = filters.q.toLowerCase();
+    whereParts.push("(LOWER(j.title) LIKE ? OR LOWER(j.description) LIKE ?)");
+    queryParams.push(`%${qLower}%`, `%${qLower}%`);
+  }
+
+  if (filters.category_id) {
+    whereParts.push("j.category_id = ?");
+    queryParams.push(filters.category_id);
+  }
+
+  if (filters.location) {
+    whereParts.push("LOWER(j.location) LIKE ?");
+    queryParams.push(`%${filters.location.toLowerCase()}%`);
+  }
+
+  if (filters.budget_min !== undefined) {
+    whereParts.push("j.budget_max >= ?");
+    queryParams.push(filters.budget_min);
+  }
+
+  if (filters.budget_max !== undefined) {
+    whereParts.push("j.budget_min <= ?");
+    queryParams.push(filters.budget_max);
+  }
+
+  if (filters.date_from) {
+    whereParts.push("j.event_date >= ?");
+    queryParams.push(filters.date_from.toISOString().split('T')[0]);
+  }
+
+  if (filters.date_to) {
+    whereParts.push("j.event_date <= ?");
+    queryParams.push(filters.date_to.toISOString().split('T')[0]);
+  }
+
+  return {
+    whereClause: whereParts.length > 0 ? `WHERE ${whereParts.join(" AND ")}` : "",
+    queryParams,
+  };
+};
+
 export const getJobs = async (req: Request, res: Response): Promise<void> => {
   try {
     const {
@@ -83,6 +131,7 @@ export const getJobs = async (req: Request, res: Response): Promise<void> => {
       limit = 10,
       sort_by = 'created_at',
       sort_order = 'desc',
+      q,
       category_id,
       location,
       budget_min,
@@ -94,6 +143,7 @@ export const getJobs = async (req: Request, res: Response): Promise<void> => {
 
     const offset = (Number(page) - 1) * Number(limit);
     const filters: SearchFilters = {
+      q: q as string,
       category_id: category_id as string,
       location: location as string,
       budget_min: budget_min ? Number(budget_min) : undefined,
@@ -105,41 +155,8 @@ export const getJobs = async (req: Request, res: Response): Promise<void> => {
 
     const db = await getDatabase();
 
-    // Build WHERE clause
-    let whereClause = 'WHERE j.status = \'open\'';
-    const queryParams: any[] = [];
+    const { whereClause, queryParams } = buildWhereClause(filters);
 
-    if (filters.category_id) {
-      whereClause += ` AND j.category_id = ?`;
-      queryParams.push(filters.category_id);
-    }
-
-    if (filters.location) {
-      whereClause += ` AND LOWER(j.location) LIKE LOWER(?)`;
-      queryParams.push(`%${filters.location}%`);
-    }
-
-    if (filters.budget_min !== undefined) {
-      whereClause += ` AND j.budget_max >= ?`;
-      queryParams.push(filters.budget_min);
-    }
-
-    if (filters.budget_max !== undefined) {
-      whereClause += ` AND j.budget_min <= ?`;
-      queryParams.push(filters.budget_max);
-    }
-
-    if (filters.date_from) {
-      whereClause += ` AND j.event_date >= ?`;
-      queryParams.push(filters.date_from.toISOString().split('T')[0]);
-    }
-
-    if (filters.date_to) {
-      whereClause += ` AND j.event_date <= ?`;
-      queryParams.push(filters.date_to.toISOString().split('T')[0]);
-    }
-
-    // Count total jobs
     const countResult = await db.get(
       `SELECT COUNT(*) as count FROM jobs j ${whereClause}`,
       queryParams
