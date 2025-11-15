@@ -1,0 +1,17 @@
+<div *ngIf="job" class="job-details-container">
+  <h1>{{ job.title }}</h1>
+  <p><strong>Company:</strong> {{ job.company }}</p>
+  <p><strong>Location:</strong> {{ job.location }}</p>
+  <p><strong>Salary:</strong> {{ job.salary | currency }}</p>
+  <p><strong>Job Type:</strong> {{ job.jobType }}</p>
+  <p><strong>Category:</strong> {{ job.category }}</p>
+  <p><strong>Posted Date:</strong> {{ job.postedDate | date }}</p>
+  <p><strong>Deadline:</strong> {{ job.deadline | date }}</p>
+  <h2>Description</h2>
+  <p>{{ job.description }}</p>
+  <h2>Requirements</h2>
+  <ul>
+    <li *ngFor="let requirement of job.requirements">{{ requirement }}</li>
+  </ul>
+  <button>Apply Now</button>
+</div>

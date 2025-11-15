@@ -7,6 +7,8 @@
     "dev": "concurrently \"npm run server:dev\" \"npm run client:dev\"",
     "server:dev": "cd backend && npm run dev",
     "client:dev": "cd frontend && npm run start:webpack",
+    "client:angular": "cd frontend-angular && npm run start",
+    "dev:angular": "concurrently \"npm run server:dev\" \"npm run client:angular\"",
     "build": "cd frontend && npm run build",
     "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
     "setup:db": "cd backend && npm run setup:db"

@@ -42,11 +42,10 @@ Uma plataforma completa para freelancers de eventos, conectando organizadores co
 - **Arquitetura MVC** com controllers e middlewares
 
 ### Frontend
-- **React 18** com **TypeScript**
-- **Tailwind CSS** para estilização
-- **React Router** para navegação
-- **React Query** para gerenciamento de estado
-- **Framer Motion** para animações
+- **Angular 20** com **TypeScript** (frontend principal)
+- **RxJS** para fluxos reativos e tratamento de efeitos
+- **Roteamento Angular** com componentes standalone
+- (Legado) **React 18** permanece disponível em `frontend/`
 
 ## 🚀 Instalação
 
@@ -103,12 +102,13 @@ CLOUDINARY_API_SECRET=sua_api_secret
 
 ### 5. Inicie o desenvolvimento
 ```bash
-# Inicia backend e frontend simultaneamente
-npm run dev
+# Inicia backend e novo frontend Angular simultaneamente
+npm run dev:angular
 
 # Ou individualmente:
-npm run server:dev    # Backend na porta 5000
-npm run client:dev    # Frontend na porta 3000
+npm run server:dev        # Backend na porta 5000
+npm run client:angular    # Frontend Angular na porta 4200
+# (Legado) React: npm run client:dev
 ```
 
 ## 📁 Estrutura do Projeto
@@ -125,7 +125,15 @@ event-freelancer-app-monorepo/
 │   │   └── index.ts        # Servidor principal
 │   ├── package.json
 │   └── tsconfig.json
-├── frontend/                # Aplicação React
+├── frontend-angular/        # Aplicação Angular 20 (principal)
+│   ├── src/
+│   │   ├── app/
+│   │   │   ├── services/   # Serviços (HttpClient + RxJS)
+│   │   │   └── jobs/       # Páginas de vagas (lista/criação)
+│   │   └── main.ts         # Bootstrap standalone
+│   ├── angular.json
+│   └── package.json
+├── frontend/                # Aplicação React (legado)
 │   ├── src/
 │   │   ├── components/     # Componentes reutilizáveis
 │   │   ├── pages/          # Páginas da aplicação
@@ -166,9 +174,10 @@ O banco é configurado automaticamente com:
 ### Scripts Disponíveis
 ```bash
 # Desenvolvimento
-npm run dev              # Inicia backend + frontend
+npm run dev:angular      # Inicia backend + Angular
 npm run server:dev       # Apenas backend
-npm run client:dev       # Apenas frontend
+npm run client:angular   # Apenas frontend Angular
+# (Legado) npm run client:dev
 
 # Build
 npm run build            # Build do frontend
@@ -194,14 +203,11 @@ npm run seed             # Popula dados de teste
 - **morgan** - Logs
 
 #### Frontend
-- **React 18** - Biblioteca UI
+- **Angular 20** - Framework SPA
 - **TypeScript** - Linguagem tipada
-- **Tailwind CSS** - Framework CSS
-- **React Router** - Roteamento
-- **React Query** - Gerenciamento de estado
-- **React Hook Form** - Formulários
-- **Framer Motion** - Animações
-- **Lucide React** - Ícones
+- **RxJS** - Programação reativa
+- **Router Angular** - Roteamento
+- **Standalone Components** - Sem `NgModule`
 
 ## 🌐 API Endpoints
 
@@ -335,3 +341,12 @@ Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalh
 
 **Desenvolvido com ❤️ pela equipe Event Freelancer**
 # event-freelancer-app-monorepo-monorepo
+## ⚙️ RxJS: Melhores Práticas aplicadas
+
+- `AsyncPipe` e composição com `Observables` no template, evitando `subscribe` manuais
+- `shareReplay({ bufferSize: 1, refCount: true })` para cache leve de listas
+- `combineLatest` + `map` para filtros reativos (busca, categoria, tipo)
+- `exhaustMap` para submissão de formulário, prevenindo múltiplos envios
+- `takeUntilDestroyed()` para encerrar streams automaticamente
+
+As implementações iniciais estão em `frontend-angular/src/app/jobs` e `frontend-angular/src/app/services`.

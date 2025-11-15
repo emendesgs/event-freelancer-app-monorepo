@@ -1,0 +1,154 @@
+<div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-md w-full space-y-8">
+    <div>
+      <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+        Crie sua conta
+      </h2>
+      <p class="mt-2 text-center text-sm text-gray-600">
+        Ou
+        <a routerLink="/login" class="font-medium text-indigo-600 hover:text-indigo-500">
+          entre na sua conta existente
+        </a>
+      </p>
+    </div>
+    
+    <form class="mt-8 space-y-6" (ngSubmit)="handleSubmit()" #registerForm="ngForm">
+      <div *ngIf="error" class="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded">
+        {{ error }}
+      </div>
+      
+      <div class="space-y-4">
+        <div>
+          <label for="full_name" class="block text-sm font-medium text-gray-700">
+            Nome completo *
+          </label>
+          <input
+            id="full_name"
+            name="full_name"
+            type="text"
+            required
+            [(ngModel)]="formData.full_name"
+            #fullName="ngModel"
+            class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            placeholder="Seu nome completo"
+          />
+        </div>
+
+        <div>
+          <label for="email" class="block text-sm font-medium text-gray-700">
+            Email *
+          </label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            required
+            [(ngModel)]="formData.email"
+            #email="ngModel"
+            class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            placeholder="seu@email.com"
+          />
+        </div>
+
+        <div>
+          <label for="password" class="block text-sm font-medium text-gray-700">
+            Senha *
+          </label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            required
+            [(ngModel)]="formData.password"
+            #password="ngModel"
+            class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            placeholder="Mínimo 6 caracteres"
+          />
+        </div>
+
+        <div>
+          <label for="confirmPassword" class="block text-sm font-medium text-gray-700">
+            Confirmar senha *
+          </label>
+          <input
+            id="confirmPassword"
+            name="confirmPassword"
+            type="password"
+            required
+            [(ngModel)]="formData.confirmPassword"
+            #confirmPassword="ngModel"
+            class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            placeholder="Confirme sua senha"
+          />
+        </div>
+
+        <div>
+          <label for="phone" class="block text-sm font-medium text-gray-700">
+            Telefone
+          </label>
+          <input
+            id="phone"
+            name="phone"
+            type="tel"
+            [(ngModel)]="formData.phone"
+            class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            placeholder="(11) 99999-9999"
+          />
+        </div>
+
+        <div>
+          <label for="location" class="block text-sm font-medium text-gray-700">
+            Localização
+          </label>
+          <input
+            id="location"
+            name="location"
+            type="text"
+            [(ngModel)]="formData.location"
+            class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            placeholder="São Paulo, SP"
+          />
+        </div>
+
+        <div>
+          <label for="skills" class="block text-sm font-medium text-gray-700">
+            Habilidades
+          </label>
+          <input
+            id="skills"
+            name="skills"
+            type="text"
+            [(ngModel)]="formData.skills"
+            class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            placeholder="Fotografia, Vídeo, Design (separadas por vírgula)"
+          />
+        </div>
+
+        <div>
+          <label for="bio" class="block text-sm font-medium text-gray-700">
+            Biografia
+          </label>
+          <textarea
+            id="bio"
+            name="bio"
+            rows="3"
+            [(ngModel)]="formData.bio"
+            class="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            placeholder="Conte um pouco sobre você e suas experiências..."
+          ></textarea>
+        </div>
+      </div>
+
+      <div>
+        <button
+          type="submit"
+          [disabled]="isLoading"
+          class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
+        >
+          <span *ngIf="isLoading">Criando conta...</span>
+          <span *ngIf="!isLoading">Criar conta</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

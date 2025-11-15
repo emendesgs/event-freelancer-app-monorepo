@@ -1,0 +1,22 @@
+<div class="applications-container">
+  <h1>Minhas Candidaturas</h1>
+  <div *ngIf="applications.length > 0; else noApplications">
+    <table>
+      <thead>
+        <tr>
+          <th>Vaga</th>
+          <th>Empresa</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let application of applications">
+          <td>{{ application.title }}</td>
+          <td>{{ application.company }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <ng-template #noApplications>
+    <p>Você ainda não se candidatou a nenhuma vaga.</p>
+  </ng-template>
+</div>

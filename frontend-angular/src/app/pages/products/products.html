@@ -1,0 +1,94 @@
+<div class="bg-gray-50 min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Header -->
+        <div class="text-center mb-12">
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight">Encontre o que precisa</h1>
+            <p class="mt-4 max-w-2xl mx-auto text-md sm:text-lg text-gray-600">Explore nossa seleção de produtos e equipamentos para o seu evento.</p>
+        </div>
+
+        <!-- Search and Filter -->
+        <div class="flex flex-col sm:flex-row justify-between items-center mb-8 gap-4">
+            <div class="relative w-full sm:flex-1 sm:max-w-lg">
+                <input 
+                    type="text"
+                    placeholder="Buscar por nome do produto..."
+                    [(ngModel)]="searchTerm"
+                    (ngModelChange)="applyFilters()"
+                    class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                />
+            </div>
+            <button 
+                (click)="toggleFilterMenu()" 
+                class="w-full sm:w-auto flex items-center justify-center p-3 border rounded-lg sm:ml-4">
+                <span>Filtros</span>
+            </button>
+        </div>
+
+        <div class="flex flex-col md:flex-row gap-8">
+            <!-- Filters Sidebar -->
+            <div [ngClass]="{'translate-x-0': isFilterMenuOpen, '-translate-x-full': !isFilterMenuOpen}" class="fixed top-0 left-0 h-full bg-white shadow-lg z-50 w-72 p-6 transform transition-transform md:relative md:translate-x-0 md:w-64 md:h-auto md:shadow-none md:p-0">
+                <div class="flex justify-between items-center mb-6 md:hidden">
+                    <h3 class="text-lg font-bold">Filtros</h3>
+                    <button (click)="toggleFilterMenu()"><mat-icon>close</mat-icon></button>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">Categorias</h3>
+                <ul class="space-y-2">
+                    <li>
+                        <button 
+                            (click)="selectedCategory = 'all'; applyFilters()" 
+                            [ngClass]="{'bg-primary-100 text-primary-700': selectedCategory === 'all'}" 
+                            class="w-full text-left px-3 py-2 rounded-md hover:bg-gray-100">
+                            Todas
+                        </button>
+                    </li>
+                    <li *ngFor="let category of categories">
+                        <button 
+                            (click)="selectedCategory = category.id; applyFilters()" 
+                            [ngClass]="{'bg-primary-100 text-primary-700': selectedCategory === category.id}" 
+                            class="w-full text-left px-3 py-2 rounded-md hover:bg-gray-100">
+                            {{category.name}}
+                        </button>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="flex-1">
+                <div *ngIf="filteredProducts.length > 0; else noProducts" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <div *ngFor="let product of filteredProducts" class="bg-white rounded-lg shadow-soft overflow-hidden transition-transform duration-300 hover:-translate-y-1 group">
+                        <div class="relative">
+                            <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
+                                <mat-icon>inventory_2</mat-icon>
+                            </div>
+                            <button class="absolute top-2 right-2 p-1.5 rounded-full bg-white/80 backdrop-blur-sm hover:bg-white transition-colors">
+                                <mat-icon>favorite_border</mat-icon>
+                            </button>
+                        </div>
+                        <div class="p-4">
+                            <p class="text-xs text-gray-500 mb-1">{{product.category.name}}</p>
+                            <h3 class="text-md font-semibold text-gray-900 mb-2 truncate">{{product.name}}</h3>
+                            <div class="flex items-center justify-between">
+                                <p class="text-lg font-bold text-primary-600">R$ {{product.price.toFixed(2)}}</p>
+                                <span 
+                                    [ngClass]="{'bg-primary-100 text-primary-800': product.price_type === 'rental', 'bg-success-100 text-success-800': product.price_type !== 'rental'}"
+                                    class="px-2.5 py-1 text-xs font-semibold rounded-full">
+                                    {{product.price_type === 'rental' ? 'Aluguel' : 'Venda'}}
+                                </span>
+                            </div>
+                            <a [routerLink]="['/products', product.id]" class="mt-4 block w-full text-center bg-primary-500 text-white py-2 rounded-lg hover:bg-primary-600 transition-colors">
+                                Ver Detalhes
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <ng-template #noProducts>
+                    <div class="text-center py-16">
+                        <mat-icon>inventory_2</mat-icon>
+                        <h3 class="text-xl font-semibold text-gray-800">Nenhum produto encontrado</h3>
+                        <p class="text-gray-500 mt-2">Tente ajustar sua busca ou filtros.</p>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>
